@@ -21,11 +21,6 @@ public class GalgelegKlient {
         Service service = Service.create(url, qName);
         GalgeInterface galgeInterface = service.getPort(GalgeInterface.class);
 
-        URL url1 = new URL("http://javabog.dk:9901/brugeradmin?wsdl");
-        QName qname = new QName("http://soap.transport.brugerautorisation/", "BrugeradminImplService");
-        Service service1 = Service.create(url1, qname);
-        Brugeradmin ba = service1.getPort(Brugeradmin.class);
-
         Scanner scan = new Scanner(System.in);
         boolean active = true;
         String gæt;
@@ -40,6 +35,7 @@ public class GalgelegKlient {
             kodeord = scan.next();
 
             try{
+                Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
                 ba.hentBruger(bruger,kodeord);
                 adgangNægtet = false;
                 System.out.println("Bruger godkendt");
