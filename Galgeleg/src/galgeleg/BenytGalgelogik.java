@@ -9,11 +9,11 @@ public class BenytGalgelogik {
       spil.nulstil();
       // Kommentér ind for at hente ord fra DR
 
-    try {
+    /*try {
       spil.hentOrdFraDr();
     } catch (Exception e) {
       e.printStackTrace();
-    }
+    }*/
 
 
       // Kommentér ind for at hente ord fra et online regneark

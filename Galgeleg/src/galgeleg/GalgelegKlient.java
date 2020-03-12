@@ -1,23 +1,30 @@
 package galgeleg;
 
+import brugerautorisation.transport.soap.Brugeradmin;
+
+import java.net.URL;
 import java.rmi.Naming;
 import java.util.Scanner;
-import brugerautorisation.transport.rmi.Brugeradmin;
+
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
 
 public class GalgelegKlient {
 
     public static void main(String[] args) throws Exception{
-        GalgeInterface galgeInterface = (GalgeInterface) Naming.lookup("rmi://localhost:1099/GalgelegServer");
+        //GalgeInterface galgeInterface = (GalgeInterface) Naming.lookup("rmi://localhost:1099/GalgelegServer");
 
-
-
+        URL url = new URL("http://localhost:9979/galgeleg?wsdl");
+        QName qName = new QName("http://galgeleg/", "GalgelogikService");
+        Service service = Service.create(url, qName);
+        GalgeInterface galgeInterface = service.getPort(GalgeInterface.class);
 
         Scanner scan = new Scanner(System.in);
         boolean active = true;
         String gæt;
         String bruger;
         String kodeord;
-        Boolean adgangNægtet = true;
+        boolean adgangNægtet = true;
 
         while(adgangNægtet) {
             System.out.println("Bruger:");
@@ -26,14 +33,16 @@ public class GalgelegKlient {
             kodeord = scan.next();
 
             try{
-                Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
-                ba.hentBruger(bruger, kodeord);
+                //Brugeradmin ba = (Brugeradmin) Naming.lookup("rmi://javabog.dk/brugeradmin");
+                //ba.hentBruger(bruger,kodeord);
                 adgangNægtet = false;
                 System.out.println("Bruger godkendt");
             } catch (Exception e){
                 //e.printStackTrace();
                 System.out.println("Bruger ikke godkendt\n" + "Prøv igen.");
             }
+
+
         }
 
         while (active){
@@ -48,5 +57,6 @@ public class GalgelegKlient {
             }
         }
         System.out.println("Spillet er slut og forbindelsen lukkes.");
+        scan.close();
     }
 }
