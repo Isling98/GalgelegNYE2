@@ -161,64 +161,33 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface {
   /**
    * Hent ord fra DRs forside (https://dr.dk)
    */
-  /*public void hentOrdFraDr() throws Exception {
+  public void hentOrdFraDr() throws Exception {
+
 
     Client client = ClientBuilder.newClient();
     Response res = client.target("https://www.dr.dk/mu-online/api/1.3/page/tv/front")
             .request(MediaType.APPLICATION_JSON).get();
     String svar = res.readEntity(String.class);
     //System.out.println(svar);
+    ArrayList<String> list=new ArrayList<String>();
+    //Parse svar som et JSON-objekt
+    JSONObject json = new JSONObject(svar);
 
-      //Parse svar som et JSON-objekt
-      JSONObject json = new JSONObject(svar);
-      for(int i = 0;i < 3; i++) {
-        //System.out.println("json=" + json);
+      //System.out.println("json=" + json);
+      JSONArray data = json.getJSONArray("Live");
+      JSONArray data2 = data.getJSONObject(0).getJSONArray("Next");
+      // System.out.println(data2.getJSONObject(i));
+      list.add(data2.getJSONObject(0).getString("Description"));
+      String[] hej = list.get(0).split("\\ ");
+      System.out.println(Arrays.toString(hej));
+      System.out.println(hej.length);
 
-        JSONArray data = json.getJSONArray("Live");
-        JSONArray data2 = data.getJSONObject(0).getJSONArray("Next");
-       // System.out.println(data2.getJSONObject(i));
+      muligeOrd.clear();
+      muligeOrd.addAll(new HashSet<String>(Arrays.asList(Arrays.toString(hej))));
 
-        JSONObject data10 = data2.getJSONObject(i);
-
-        String array[] = new String[5];
-
-
-        array[i] = data10.getString("Description").split("\\s+");
-        for(int j=0; j < array.length; j++){
-          array[i] = array[i].replaceAll("[^a-zæøå]", " ");
-          System.out.println(array[i]);
-        }
-
-
-      }
-
-
-
-
-
-
-   /* data = data.substring(data.indexOf("<body")). // fjern headere
-            replaceAll("<.+?>", " ").toLowerCase(). // fjern tags
-            replaceAll("&#198;", "æ"). // erstat HTML-tegn
-            replaceAll("&#230;", "æ"). // erstat HTML-tegn
-            replaceAll("&#216;", "ø"). // erstat HTML-tegn
-            replaceAll("&#248;", "ø"). // erstat HTML-tegn
-            replaceAll("&oslash;", "ø"). // erstat HTML-tegn
-            replaceAll("&#229;", "å"). // erstat HTML-tegn
-            replaceAll("[^a-zæøå]", " "). // fjern tegn der ikke er bogstaver
-            replaceAll(" [a-zæøå] "," "). // fjern 1-bogstavsord
-            replaceAll(" [a-zæøå][a-zæøå] "," "); // fjern 2-bogstavsord
-
-    System.out.println("data = " + data);
-    System.out.println("data = " + Arrays.asList(data.split("\\s+")));
-    muligeOrd.clear();
-    muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
-*/
-
-
-    /*System.out.println("muligeOrd = " + muligeOrd);
+    System.out.println("muligeOrd = " + muligeOrd);
     nulstil();
-  }*/
+}
 
 
   /**

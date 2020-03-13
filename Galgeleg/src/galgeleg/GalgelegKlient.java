@@ -16,10 +16,11 @@ public class GalgelegKlient {
     public static void main(String[] args) throws Exception{
         //GalgeInterface galgeInterface = (GalgeInterface) Naming.lookup("rmi://localhost:1099/GalgelegServer");
 
-        URL url = new URL("http://localhost:9979/galgeleg?wsdl");
+        URL url = new URL("http://dist.saluton.dk:9979/galgeleg?wsdl");
         QName qName = new QName("http://galgeleg/", "GalgelogikService");
         Service service = Service.create(url, qName);
         GalgeInterface galgeInterface = service.getPort(GalgeInterface.class);
+
 
         Scanner scan = new Scanner(System.in);
         boolean active = true;
