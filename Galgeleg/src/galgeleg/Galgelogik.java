@@ -34,11 +34,11 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface {
   private boolean spilletErTabt;
 
   public Galgelogik() throws java.rmi.RemoteException {
-    /*try {
+    try {
       hentOrdFraDr();
     } catch (Exception e) {
       e.printStackTrace();
-    }*/
+    }
     muligeOrd.add("bil");
     muligeOrd.add("computer");
     muligeOrd.add("programmering");
@@ -169,25 +169,27 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface {
             .request(MediaType.APPLICATION_JSON).get();
     String svar = res.readEntity(String.class);
     //System.out.println(svar);
-    ArrayList<String> list=new ArrayList<String>();
+    ArrayList<String> list = new ArrayList<String>();
     //Parse svar som et JSON-objekt
     JSONObject json = new JSONObject(svar);
 
-      //System.out.println("json=" + json);
-      JSONArray data = json.getJSONArray("Live");
-      JSONArray data2 = data.getJSONObject(0).getJSONArray("Next");
-      // System.out.println(data2.getJSONObject(i));
-      list.add(data2.getJSONObject(0).getString("Description"));
-      String[] hej = list.get(0).split("\\ ");
-      System.out.println(Arrays.toString(hej));
-      System.out.println(hej.length);
+    //System.out.println("json=" + json);
+    JSONArray data = json.getJSONArray("Live");
+    JSONArray data2 = data.getJSONObject(0).getJSONArray("Next");
+    // System.out.println(data2.getJSONObject(i));
+    list.add(data2.getJSONObject(0).getString("Description"));
+    String[] hej = list.get(0).split("\\ ");
+    System.out.println(Arrays.toString(hej));
+    System.out.println(hej.length);
 
-      muligeOrd.clear();
-      muligeOrd.addAll(new HashSet<String>(Arrays.asList(Arrays.toString(hej))));
+
+
+    muligeOrd.clear();
+    muligeOrd.addAll(new HashSet<String>(Arrays.asList(Arrays.toString(hej))));
 
     System.out.println("muligeOrd = " + muligeOrd);
     nulstil();
-}
+  }
 
 
   /**
