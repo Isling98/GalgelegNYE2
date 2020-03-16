@@ -17,7 +17,8 @@ public class GalgelegServer {
 
         //Naming.rebind("rmi://localhost/brugeradmin", galgelogik);
 
-        Endpoint.publish("http://[::]:9979/galgeleg", galgelogik);
+        //Endpoint.publish("http://[::]:9901/galgeleg", galgelogik);
+        Endpoint.publish("http://[::]:9913/galgeleg", galgelogik);
         System.out.println("Galgelegs server er opstartet");
 
         galgelogik.nulstil();

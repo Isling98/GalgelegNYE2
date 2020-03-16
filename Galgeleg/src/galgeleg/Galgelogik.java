@@ -39,14 +39,14 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    muligeOrd.add("bil");
+    /*muligeOrd.add("bil");
     muligeOrd.add("computer");
     muligeOrd.add("programmering");
     muligeOrd.add("motorvej");
     muligeOrd.add("busrute");
     muligeOrd.add("gangsti");
     muligeOrd.add("skovsnegl");
-    muligeOrd.add("solsort");
+    muligeOrd.add("solsort");*/
     muligeOrd.add("nitten");
     nulstil();
   }
@@ -173,20 +173,9 @@ public class Galgelogik extends UnicastRemoteObject implements GalgeInterface {
     //Parse svar som et JSON-objekt
     JSONObject json = new JSONObject(svar);
 
-    //System.out.println("json=" + json);
-    JSONArray data = json.getJSONArray("Live");
-    JSONArray data2 = data.getJSONObject(0).getJSONArray("Next");
-    // System.out.println(data2.getJSONObject(i));
-    list.add(data2.getJSONObject(0).getString("Description"));
-    String[] hej = list.get(0).split("\\ ");
-    System.out.println(Arrays.toString(hej));
-    System.out.println(hej.length);
-
-
-
-    muligeOrd.clear();
-    muligeOrd.addAll(new HashSet<String>(Arrays.asList(Arrays.toString(hej))));
-
+    String data2 = json.getJSONArray("Live").getJSONObject(0).getJSONObject("Now").getString("Description");
+    data2 = data2.replaceAll("<,.+?>", " ").toLowerCase().replaceAll("[^a-zæøå]", " ");
+    muligeOrd.addAll(new HashSet<String>(Arrays.asList((data2.split(" ")))));
     System.out.println("muligeOrd = " + muligeOrd);
     nulstil();
   }
